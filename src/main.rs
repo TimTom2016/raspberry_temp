@@ -15,7 +15,12 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            tracing_subscriber::EnvFilter::from_default_env()
+                .add_directive("sqlx=warn".parse().unwrap()),
+        )
+        .init();
     dotenvy::dotenv()?;
     let db_url = std::env::var("DATABASE_URL").unwrap_or("sqlite://db.sqlite?mode=rwc".to_string());
     let bind_addr = std::env::var("BIND_ADDR").unwrap_or("0.0.0.0:3000".to_string());

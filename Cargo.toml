@@ -1,0 +1,25 @@
+[package]
+name = "raspberry_temp"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+sea-orm = { version = "2.0.0-rc.37", features = [
+    "sqlx-sqlite",
+    "runtime-tokio",
+    "schema-sync",
+    "entity-registry",
+    "chrono",
+    "macros",
+] }
+axum = { version = "0.8.8", features = ["macros"] }
+hypertext = { version = "0.12.1", features = ["axum", "htmx", "alpine"] }
+tokio = { version = "1.50.0", features = ["full"] }
+chrono = "0.4.44"
+dotenvy = "0.15.7"
+thiserror = "2.0.18"
+tower-http = { version = "0.6.8", features = ["trace", "timeout"] }
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+axum_thiserror_tracing = "0.1.0"
+serde = "1.0.228"

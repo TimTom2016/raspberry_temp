@@ -6,6 +6,7 @@ use rust_embed::Embed;
 use sea_orm::{Database, DatabaseConnection};
 use tokio::net::TcpListener;
 use tower_http::{timeout::TimeoutLayer, trace::TraceLayer};
+mod compression;
 mod dto;
 mod entity;
 mod handler;
@@ -42,8 +43,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create shared shutdown channel
     let (shutdown_tx, shutdown_rx) = tokio::sync::watch::channel(false);
 
-    measure::spawn_measurement_task(state.clone(), shutdown_rx, 1).await;
+    measure::spawn_measurement_task(state.clone(), shutdown_rx.clone(), 1).await;
     tracing::info!("Started background measurement task");
+
+    // Compression task also spawns from measure::spawn_measurement_task location
+    compression::spawn_compression_task(state.clone(), shutdown_rx).await;
+    tracing::info!("Started background compression task");
 
     // Create a regular axum app.
     let app = Router::new()

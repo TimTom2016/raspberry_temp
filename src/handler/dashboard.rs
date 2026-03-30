@@ -1,11 +1,6 @@
-use std::collections::HashMap;
-
 use crate::{
     AppState,
-    handler::{
-        api::{GraphQuery, GraphSpans},
-        shell,
-    },
+    handler::{api::GraphQuery, shell},
 };
 use axum::{
     Router,

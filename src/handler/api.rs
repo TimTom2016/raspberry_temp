@@ -7,19 +7,15 @@ use axum::{
     routing::get,
 };
 use axum_thiserror_tracing::IntoResponse;
-use chrono::{DateTime, TimeZone as _, Utc};
+use chrono::{DateTime, Utc};
 use sea_orm::{
-    ColumnTrait as _, DbErr, EntityOrSelect, EntityTrait, PaginatorTrait as _, QueryFilter as _,
+    ColumnTrait as _, DbErr, EntityTrait, PaginatorTrait as _, QueryFilter as _, QueryOrder,
 };
 use serde::Deserialize;
 
 use crate::AppState;
 #[derive(Debug, thiserror::Error, IntoResponse)]
 pub enum ApiError {
-    #[error("Not found")]
-    #[status(StatusCode::NOT_FOUND)]
-    NotFound,
-
     #[error("Database error")]
     #[status(StatusCode::INTERNAL_SERVER_ERROR)]
     DatabaseError(#[from] DbErr),
@@ -63,7 +59,7 @@ pub async fn get_measurements(
     }
 
     let measurements = query
-        .order_by_id_desc()
+        .order_by_desc(crate::entity::measurement::Column::Timestamp)
         .paginate(&state.db, page.per_page.min(100))
         .fetch_page(page.page)
         .await?;

@@ -22,6 +22,12 @@ impl AsRef<f32> for Measurement {
     }
 }
 
+impl From<f32> for Measurement {
+    fn from(value: f32) -> Self {
+        Measurement(value)
+    }
+}
+
 #[derive(Debug, thiserror::Error)]
 pub enum MeasurementError {
     #[error("invalid format")]

@@ -1,6 +1,8 @@
 use std::time::Duration;
 
 use axum::{Router, http::StatusCode};
+use axum_embed::ServeEmbed;
+use rust_embed::Embed;
 use sea_orm::{Database, DatabaseConnection};
 use tokio::net::TcpListener;
 use tower_http::{timeout::TimeoutLayer, trace::TraceLayer};
@@ -12,6 +14,10 @@ mod measure;
 pub struct AppState {
     db: DatabaseConnection,
 }
+
+#[derive(Embed, Clone)]
+#[folder = "dist/"]
+struct Assets;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -42,6 +48,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a regular axum app.
     let app = Router::new()
         .merge(handler::router())
+        .fallback_service(ServeEmbed::<Assets>::new())
         .layer((
             TraceLayer::new_for_http(),
             // Graceful shutdown will wait for outstanding requests to complete. Add a timeout so

@@ -1,0 +1,306 @@
+:root {
+    /* Base Colors */
+    --background-color: #2a3c4d;
+    --primary-color: #009df8;
+    --secondary-color: #37b658;
+    --text-color: #e8f1f5;
+
+    /* === AUTO-GENERATED COLORS === */
+
+    /* Background Variants */
+    --background-light: color-mix(in srgb, var(--background-color), white 15%);
+    --background-dark: color-mix(in srgb, var(--background-color), black 25%);
+
+    /* Text Variants */
+    --text-light: color-mix(in srgb, var(--text-color), white 40%);
+    --text-muted: color-mix(in srgb, var(--text-color), gray 40%);
+    --text-dark: color-mix(in srgb, var(--text-color), black 70%);
+
+    /* Primary Variants */
+    --primary-light: color-mix(in srgb, var(--primary-color), white 20%);
+    --primary-dark: color-mix(in srgb, var(--primary-color), black 25%);
+    --primary-hover: color-mix(in srgb, var(--primary-color), white 10%);
+
+    /* Secondary Variants */
+    --secondary-light: color-mix(in srgb, var(--secondary-color), white 20%);
+    --secondary-dark: color-mix(in srgb, var(--secondary-color), black 25%);
+
+    /* UI Elements */
+    --border-color: color-mix(in srgb, var(--text-color), transparent 80%);
+    --card-background: color-mix(in srgb, var(--background-color), white 10%);
+
+    /* Status Colors (can also be derived if you want) */
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --info-color: #2196f3;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Shadows */
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+    margin: 0;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+/* Body defaults */
+body {
+    min-height: 100dvh;
+    height: 100%;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+}
+
+/* Media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Form elements inherit font */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+}
+
+/* Remove button styling */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--secondary-light);
+}
+
+/* Lists */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+/* Paragraph spacing helper */
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Focus styles (accessibility) */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Center helper */
+.center {
+    display: grid;
+    place-items: center;
+    height: 100%;
+}
+
+.card {
+    background: var(--card-background);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+/* ── Dashboard ───────────────────────────────────── */
+
+.dashboard {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.header h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--secondary-color);
+    padding-bottom: 4px;
+}
+
+.live-dot::before {
+    content: "";
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    box-shadow: 0 0 8px var(--secondary-color);
+    animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.75);
+    }
+}
+
+/* ── Stats ───────────────────────────────────────── */
+
+.stat-row {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.stat-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1;
+}
+
+/* ── Span buttons ────────────────────────────────── */
+
+.span-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.span-btn {
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+    letter-spacing: 0.06em;
+}
+
+.span-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: color-mix(in srgb, var(--primary-color), transparent 88%);
+}
+
+.span-btn.active {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: color-mix(in srgb, var(--primary-color), transparent 88%);
+    box-shadow: 0 0 10px
+        color-mix(in srgb, var(--primary-color), transparent 60%);
+}
